@@ -7,13 +7,13 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  azureSubscription: 'YOUR_AZURE_SERVICE_CONNECTION_NAME'
-  resourceGroup: 'YOUR_RESOURCE_GROUP_NAME'
-  dataFactoryName: 'sales-etl-factory'
-  sqlServerName: 'YOUR_SQL_SERVER_NAME'
+  azureSubscription: 'AzureStudentConnection'  
+  resourceGroup: 'etl-demo-rg'
+  dataFactoryName: 'health-etl-factory'
+  sqlServerName: 'iman-sqlserver'
   sqlDatabaseName: 'SalesDB'
-  sqlAdminUsername: 'CloudSA...'
-  sqlAdminPassword: '$(sqlAdminPassword)'
+  sqlAdminUsername: 'CloudSA0cbd5e9b'
+  sqlAdminPassword: '$(sqlAdminPassword)'  
 
 steps:
 - task: AzureCLI@2
