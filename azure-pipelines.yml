@@ -1,0 +1,32 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  azureSubscription: 'YOUR_AZURE_SERVICE_CONNECTION_NAME'
+  resourceGroup: 'YOUR_RESOURCE_GROUP_NAME'
+  dataFactoryName: 'sales-etl-factory'
+  sqlServerName: 'YOUR_SQL_SERVER_NAME'
+  sqlDatabaseName: 'SalesDB'
+  sqlAdminUsername: 'CloudSA...'
+  sqlAdminPassword: '$(sqlAdminPassword)'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az datafactory pipeline create --factory-name $(dataFactoryName) --resource-group $(resourceGroup) --name LoadSalesToStaging --pipeline "@adf/pipeline.json"
+
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: $(azureSubscription)
+    ScriptType: 'FilePath'
+    ScriptPath: 'scripts/deploy_sql.ps1'
+    azurePowerShellVersion: 'LatestVersion'
